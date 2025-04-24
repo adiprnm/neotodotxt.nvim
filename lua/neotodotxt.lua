@@ -160,7 +160,15 @@ function neotodotxt.create_task()
     if task_name and task_name:match("%S") then
       local date = os.date("%Y-%m-%d")
       local buf = vim.api.nvim_get_current_buf()
-      vim.api.nvim_buf_set_lines(buf, 0, 0, false, { date .. " " .. task_name })
+      local priority = string.match(task_name, "^%(%u%)")
+      if priority then
+        task_name = string.gsub(task_name, "^%(%u%)%s+", '', 1)
+        priority = priority .. ' '
+      else
+        priority = ''
+      end
+
+      vim.api.nvim_buf_set_lines(buf, 0, 0, false, { priority .. date .. " " .. task_name })
       print("✅ Task added: " .. task_name)
     else
       print("❌ Task not added (empty or canceled)")
