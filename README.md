@@ -32,7 +32,7 @@ vim.keymap.set("n", "<leader>tc", function() neotodotxt.sort_by_created_date() e
 vim.keymap.set("n", "<leader>td", function() neotodotxt.sort_by_due_date() end)
 vim.keymap.set("n", "<leader>tp", function() neotodotxt.sort_by_project() end)
 vim.keymap.set("n", "<leader>tC", function() neotodotxt.sort_by_context() end)
-vim.keymap.set("n", "<leader>tm", function() neotodotxt.move_done_task() end)
+vim.keymap.set("n", "<leader>tm", function() neotodotxt.move_to_done() end)
 vim.keymap.set("n", "<leader>ta", function() neotodotxt.create_task() end)
 ```
 
