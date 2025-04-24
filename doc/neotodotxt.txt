@@ -1,0 +1,90 @@
+==============================================================================
+------------------------------------------------------------------------------
+                                                                  *neotodotxt*
+                                   `neotodotxt`
+
+A refreshingly simple NeoVim plugin for creating and managing todo.txt file.
+
+MIT License Copyright (c) 2025 Adi Purnama
+
+==============================================================================
+@module 'neotodotxt'
+
+------------------------------------------------------------------------------
+Setup configuration for the neotodotxt module.
+@class Setup
+@field todotxt_path string: Path to the todo.txt file. Default: "~/Documents/todo.txt"
+@field donetxt_path string: Path to the done.txt file. Default: "~/Documents/done.txt"
+
+------------------------------------------------------------------------------
+                                                    *neotodotxt.create_task()*
+                       `neotodotxt.create_task`()
+Create a new task and prepend it to the open buffer. Pressing <Escape> or
+creating a blank task will cancel the task creation.
+@return nil
+
+------------------------------------------------------------------------------
+                                                 *neotodotxt.open_todo_file()*
+                       `neotodotxt.open_todo_file`()
+Opens the todo.txt file.
+@return nil
+
+------------------------------------------------------------------------------
+                                            *neotodotxt.open_done_todo_file()*
+                       `neotodotxt.open_done_todo_file`()
+Opens the done.txt file.
+@return nil
+
+------------------------------------------------------------------------------
+                                                   *neotodotxt.toggle_state()*
+                       `neotodotxt.toggle_state`()
+Toggles the todo state of the current line in a todo.txt file.
+If the line starts with "x YYYY-MM-DD ", it removes it to mark as not done.
+Otherwise, it adds "x YYYY-MM-DD " at the beginning to mark as done.
+@return nil
+
+------------------------------------------------------------------------------
+                                             *neotodotxt.sort_by_created_at()*
+                       `neotodotxt.sort_by_created_at`()
+Sorts the tasks in the open buffer by created date.
+@returns boolean
+
+------------------------------------------------------------------------------
+                                              *neotodotxt.sort_by_due_date()*
+                       `neotodotxt.sort_by_due_date`()
+Sorts the tasks in the open buffer by due date.
+@returns boolean
+
+------------------------------------------------------------------------------
+                                               *neotodotxt.sort_by_priority()*
+                       `neotodotxt.sort_by_priority`()
+Sorts the tasks in the open buffer by priority.
+@return nil
+
+------------------------------------------------------------------------------
+                                                *neotodotxt.sort_by_project()*
+                       `neotodotxt.sort_by_project`()
+Sorts the tasks in the open buffer by project.
+@return nil
+
+------------------------------------------------------------------------------
+                                               *neotodotxt.sort_by_context()*
+                       `neotodotxt.sort_by_context`()
+Sorts the tasks in the open buffer by context.
+@return nil
+
+------------------------------------------------------------------------------
+                                                   *neotodotxt.move_to_done()*
+                       `neotodotxt.move_to_done`()
+Moves the done task under the current cursor from the todo.txt file to the
+done.txt file.
+@return nil
+
+------------------------------------------------------------------------------
+                                                          *neotodotxt.setup()*
+                       `neotodotxt.setup`({opts})
+Setup function
+@param opts Setup
+
+
+ vim:tw=78:ts=8:noet:ft=help:norl:
