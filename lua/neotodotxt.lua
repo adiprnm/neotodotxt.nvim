@@ -95,12 +95,12 @@ function neotodotxt.sort_by_due_date()
 end
 
 function neotodotxt.open_todo_file()
-  local todo_path = vim.fn.expand(config.todotxt_path or "~/Documents/todo.txt")
+  local todo_path = vim.fn.expand(config.todotxt_path)
   vim.cmd("edit " .. todo_path)
 end
 
 function neotodotxt.open_done_todo_file()
-  local todo_path = vim.fn.expand(config.donetxt_path or "~/Documents/done.txt")
+  local todo_path = vim.fn.expand(config.donetxt_path)
   vim.cmd("edit " .. todo_path)
 end
 
@@ -189,6 +189,20 @@ function neotodotxt.move_to_done()
 
   vim.api.nvim_buf_set_lines(bufnr, row - 1, row, false, {})
   print("✅ Task moved to " .. done_file)
+end
+
+function neotodotxt.setup(opts)
+	opts = opts or {}
+	config.todotxt_path = opts.todotxt_path or vim.env.HOME .. "/Documents/todo.txt"
+	config.donetxt_path = opts.donetxt_path or vim.env.HOME .. "/Documents/done.txt"
+
+	if vim.fn.filereadable(config.todotxt_path) == 0 then
+		vim.fn.writefile({}, config.todotxt_path)
+	end
+
+	if vim.fn.filereadable(config.donetxt_path) == 0 then
+		vim.fn.writefile({}, config.donetxt_path)
+	end
 end
 
 return neotodotxt
