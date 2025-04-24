@@ -183,12 +183,12 @@ function neotodotxt.move_to_done()
     f:write(line .. "\n")
     f:close()
   else
-    print("❌ Failed to write to " .. done_file)
+    print("❌ Failed to write to " .. config.donetxt_path)
     return
   end
 
   vim.api.nvim_buf_set_lines(bufnr, row - 1, row, false, {})
-  print("✅ Task moved to " .. done_file)
+  print("✅ Task moved to " .. config.donetxt_path)
 end
 
 function neotodotxt.setup(opts)
