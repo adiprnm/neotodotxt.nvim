@@ -81,6 +81,12 @@ done.txt file.
 @return nil
 
 ------------------------------------------------------------------------------
+                                          *neotodotxt.move_all_done_to_done()*
+                       `neotodotxt.move_all_done_to_done`()
+Move all done todos from the todo.txt file to the done.txt file.
+@return nil
+
+------------------------------------------------------------------------------
                                                           *neotodotxt.setup()*
                        `neotodotxt.setup`({opts})
 Setup function
