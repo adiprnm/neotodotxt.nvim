@@ -199,6 +199,39 @@ function neotodotxt.move_to_done()
   print("✅ Task moved to " .. config.donetxt_path)
 end
 
+function neotodotxt.move_all_done_to_done()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local active_lines = {}
+  local done_lines = {}
+
+  for _, line in ipairs(lines) do
+    if line:match("^x ") then
+      table.insert(done_lines, line)
+    else
+      table.insert(active_lines, line)
+    end
+  end
+
+  if #done_lines == 0 then
+    print("❌ No done tasks to move")
+    return
+  end
+
+  local f = io.open(config.donetxt_path, "a")
+  if f then
+    for _, line in ipairs(done_lines) do
+      f:write(line .. "\n")
+    end
+    f:close()
+  else
+    print("❌ Failed to write to " .. config.donetxt_path)
+    return
+  end
+
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, active_lines)
+  print("✅ Moved " .. #done_lines .. " done tasks to " .. config.donetxt_path)
+end
+
 function neotodotxt.setup(opts)
 	opts = opts or {}
 	config.todotxt_path = opts.todotxt_path or vim.env.HOME .. "/Documents/todo.txt"
