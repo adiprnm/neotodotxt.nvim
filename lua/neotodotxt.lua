@@ -88,6 +88,7 @@ local function sort_tasks_by(sort_column, sort_direction)
   for _, line in ipairs(active_todos) do table.insert(sorted, line) end
   for _, line in ipairs(done_todos) do table.insert(sorted, line) end
   vim.api.nvim_buf_set_lines(0, 0, -1, false, sorted)
+  vim.cmd("write")
 end
 
 function neotodotxt.sort_by_due_date()
@@ -161,6 +162,7 @@ function neotodotxt.toggle_state()
   end
 
   vim.api.nvim_buf_set_lines(0, row-1, row, true, {new_line})
+  vim.cmd("write")
 end
 
 function neotodotxt.create_task()
@@ -177,6 +179,7 @@ function neotodotxt.create_task()
       end
 
       vim.api.nvim_buf_set_lines(buf, 0, 0, false, { priority .. date .. " " .. task_name })
+      vim.cmd("write")
       print("✅ Task added: " .. task_name)
     else
       print("❌ Task not added (empty or canceled)")
@@ -205,6 +208,7 @@ function neotodotxt.move_to_done()
   end
 
   vim.api.nvim_buf_set_lines(bufnr, row - 1, row, false, {})
+  vim.cmd("write")
   print("✅ Task moved to " .. done_path)
 end
 
@@ -239,6 +243,7 @@ function neotodotxt.move_all_done_to_done()
   end
 
   vim.api.nvim_buf_set_lines(0, 0, -1, false, active_lines)
+  vim.cmd("write")
   print("✅ Moved " .. #done_lines .. " done tasks to " .. done_path)
 end
 
