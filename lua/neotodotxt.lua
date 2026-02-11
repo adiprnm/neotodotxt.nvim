@@ -1,6 +1,14 @@
 local neotodotxt = {}
 local config = {}
 
+local function get_file_path(filename, config_path)
+  local cwd_path = vim.fn.getcwd() .. "/" .. filename
+  if vim.fn.filereadable(cwd_path) == 1 then
+    return cwd_path
+  end
+  return config_path
+end
+
 local function created_date(line)
   if line:match("^x%s") then
     _, created = line:match("^x%s+(%d%d%d%d%-%d%d%-%d%d)%s+(%d%d%d%d%-%d%d%-%d%d)")
@@ -95,13 +103,13 @@ function neotodotxt.sort_by_due_date()
 end
 
 function neotodotxt.open_todo_file()
-  local todo_path = vim.fn.expand(config.todotxt_path)
-  vim.cmd("edit " .. todo_path)
+  local todo_path = get_file_path("todo.todotxt", config.todotxt_path)
+  vim.cmd("edit " .. vim.fn.expand(todo_path))
 end
 
 function neotodotxt.open_done_todo_file()
-  local todo_path = vim.fn.expand(config.donetxt_path)
-  vim.cmd("edit " .. todo_path)
+  local todo_path = get_file_path("done.todotxt", config.donetxt_path)
+  vim.cmd("edit " .. vim.fn.expand(todo_path))
 end
 
 function neotodotxt.sort_by_priority()
@@ -186,17 +194,18 @@ function neotodotxt.move_to_done()
     return
   end
 
-  local f = io.open(config.donetxt_path, "a")
+  local done_path = get_file_path("done.todotxt", config.donetxt_path)
+  local f = io.open(done_path, "a")
   if f then
     f:write(line .. "\n")
     f:close()
   else
-    print("❌ Failed to write to " .. config.donetxt_path)
+    print("❌ Failed to write to " .. done_path)
     return
   end
 
   vim.api.nvim_buf_set_lines(bufnr, row - 1, row, false, {})
-  print("✅ Task moved to " .. config.donetxt_path)
+  print("✅ Task moved to " .. done_path)
 end
 
 function neotodotxt.move_all_done_to_done()
@@ -217,19 +226,20 @@ function neotodotxt.move_all_done_to_done()
     return
   end
 
-  local f = io.open(config.donetxt_path, "a")
+  local done_path = get_file_path("done.todotxt", config.donetxt_path)
+  local f = io.open(done_path, "a")
   if f then
     for _, line in ipairs(done_lines) do
       f:write(line .. "\n")
     end
     f:close()
   else
-    print("❌ Failed to write to " .. config.donetxt_path)
+    print("❌ Failed to write to " .. done_path)
     return
   end
 
   vim.api.nvim_buf_set_lines(0, 0, -1, false, active_lines)
-  print("✅ Moved " .. #done_lines .. " done tasks to " .. config.donetxt_path)
+  print("✅ Moved " .. #done_lines .. " done tasks to " .. done_path)
 end
 
 function neotodotxt.setup(opts)
